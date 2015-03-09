@@ -121,8 +121,10 @@ namespace MinakoNoTango.Tests.LibraryTests
             var dataAccessWithTestPhrase = new Mock<IDataAccess>();
             dataAccessWithTestPhrase.Setup(x => 
                 x.GetSingle(It.IsAny<int>())).Returns(testPhrase);
-            dataAccessWithTestPhrase.Setup(x => x.Update(It.IsAny<int>()), 
-                It.IsAny<PhraseEntity>()).Returns(true);
+            dataAccessWithTestPhrase.Setup(x =>
+               x.Update(It.IsAny<int>(), It.IsAny<PhraseEntity>()))
+               .Returns(true);
+         
             IMinakoNoTangoLibrary libWithTestData = 
                 new MinakoNoTangoLibrary(dataAccessWithTestPhrase.Object);
 
@@ -141,7 +143,16 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestMethod]
         public void Dulce_QuieroAgregarMiFrase_CapturaDeFraseNueva()
         {
+            string author = "Minako";
+            string phrase = "This is my new phrase.";
+            string comment = "Luis, me ayudas con esta?";
 
+            _testSecurityToken.Username = author;
+            PhraseEntity newPhrase = _lib.AddEnglishPhrase(_testSecurityToken, phrase, comment);
+            
+            Assert.IsNotNull(newPhrase);
+            Assert.AreEqual(author, newPhrase.AuthorName);
+            Assert.AreEqual(phrase, newPhrase.EnglishPhrase);
         }
 
         [TestMethod]

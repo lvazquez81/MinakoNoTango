@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinakoNoTango", "MinakoNoTango\MinakoNoTango.csproj", "{10BFDC40-4EFF-47F8-969B-997950AC4321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinakoNoTango.Tests", "MinakoNoTango.Tests\MinakoNoTango.Tests.csproj", "{9728CEEA-A2F8-4DE8-B2D3-A94824A8BFF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10BFDC40-4EFF-47F8-969B-997950AC4321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BFDC40-4EFF-47F8-969B-997950AC4321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BFDC40-4EFF-47F8-969B-997950AC4321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BFDC40-4EFF-47F8-969B-997950AC4321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9728CEEA-A2F8-4DE8-B2D3-A94824A8BFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9728CEEA-A2F8-4DE8-B2D3-A94824A8BFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9728CEEA-A2F8-4DE8-B2D3-A94824A8BFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9728CEEA-A2F8-4DE8-B2D3-A94824A8BFF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

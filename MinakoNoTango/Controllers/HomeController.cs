@@ -31,5 +31,17 @@ namespace MinakoNoTango.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Save()
+        {
+            return View("Index",getPhrases());
+        }
+
+        [HttpGet]
+        public ActionResult ViewPhrase()
+        {
+            return View("Detail", new PhraseEntity());
+        }
+
     }
 }

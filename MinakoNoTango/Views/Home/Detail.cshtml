@@ -1,0 +1,51 @@
+﻿@model MinakoNoTangoLib.Entities.PhraseEntity
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewPhrase</title>
+</head>
+<body>
+    <fieldset>
+        <legend>PhraseEntity</legend>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.EnglishPhrase)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.EnglishPhrase)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.SpanishPhrase)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.SpanishPhrase)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.JapansePhrase)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.JapansePhrase)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.AuthorName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.AuthorName)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

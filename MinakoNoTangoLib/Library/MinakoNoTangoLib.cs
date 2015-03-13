@@ -13,6 +13,8 @@ namespace MinakoNoTangoLib.Library
         PhraseEntity GetPhraseDetail(SecurityToken token, int phraseId);
         bool AddEnglishCorrection(SecurityToken token, int phraseId, string correction, string comment);
         bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction, string comment);
+
+        PhraseEntity AddEnglishPhrase(SecurityToken _testSecurityToken, string phrase, string comment);
     }
 
     public class MinakoNoTangoLibrary : IMinakoNoTangoLibrary
@@ -52,6 +54,25 @@ namespace MinakoNoTangoLib.Library
             PhraseEntity storedPhrase = _dataAcces.GetSingle(phraseId);
             storedPhrase.JapansePhrase = correction;
             return true;
+        }
+
+
+        public PhraseEntity AddEnglishPhrase(SecurityToken token, string phrase, string comment)
+        {
+            PhraseEntity newPhrase = new PhraseEntity()
+            {
+                EnglishPhrase = phrase,
+                Comments = new List<CommentEntity>()
+                {
+                    new CommentEntity(){
+                        AuthorName = token.Username,
+                        Comment = comment
+                    }
+                }
+            };
+            _dataAcces.Add(newPhrase);
+
+            return newPhrase;
         }
     }
 }

@@ -44,8 +44,9 @@
     <Compile Include="Entities\PhraseEntity.cs" />
     <Compile Include="Entities\TokenEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
-    <Compile Include="Library\IDataAccess.cs" />
+    <Compile Include="Library\Repository\IDataAccess.cs" />
     <Compile Include="Library\IMinakoNoTangoAuthentication.cs" />
+    <Compile Include="Library\Repository\MemoryRepository.cs" />
     <Compile Include="Library\MinakoNoTangoAuthentication.cs" />
     <Compile Include="Library\MinakoNoTangoLib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -57,22 +57,13 @@ namespace MinakoNoTangoLib.Library
         }
 
 
-        public PhraseEntity AddEnglishPhrase(SecurityToken token, string phrase, string comment)
+        public PhraseEntity AddEnglishPhrase(SecurityToken token, string englishPhrase, string comment)
         {
-            PhraseEntity newPhrase = new PhraseEntity()
-            {
-                EnglishPhrase = phrase,
-                Comments = new List<CommentEntity>()
-                {
-                    new CommentEntity(){
-                        AuthorName = token.Username,
-                        Comment = comment
-                    }
-                }
-            };
-            _dataAcces.Add(newPhrase);
-
-            return newPhrase;
+            PhraseEntity phrase = _dataAcces.Add(token.Username, englishPhrase, comment);
+            phrase.AuthorName = token.Username;
+            phrase.EnglishPhrase = englishPhrase;
+            phrase.Comment = comment;
+            return phrase;
         }
     }
 }

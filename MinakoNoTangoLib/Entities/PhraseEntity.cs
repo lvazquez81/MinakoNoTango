@@ -13,8 +13,14 @@ namespace MinakoNoTangoLib.Entities
         public string SpanishPhrase { get; set; }
         public string JapansePhrase { get; set; }
 
-        //public int AuthorId { get; set; }
+        // Author 
+        public int AuthorId { get; set; }
         public string AuthorName { get; set; }
+
+        // Comments
+        public string Comment { get; set; }
         public IList<CommentEntity> Comments { get; set; }
+
+        
     }
 }

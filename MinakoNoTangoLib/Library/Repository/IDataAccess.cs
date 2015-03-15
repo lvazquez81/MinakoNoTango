@@ -11,7 +11,13 @@ namespace MinakoNoTangoLib.Library
     {
         IList<PhraseEntity> GetAll();
         PhraseEntity GetSingle(int phraseId);
-        bool Add(PhraseEntity phrase);
-        bool Update(int phraseId, PhraseEntity phrase);
+
+        // Adding
+        PhraseEntity Add(string authorName, string englishPhrase);
+        PhraseEntity Add(string authorName, string englishPhrase, string comment);
+
+
+        bool Remove(int phraseId);
+        bool Update(PhraseEntity phrase);
     }
 }

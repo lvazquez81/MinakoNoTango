@@ -41,6 +41,8 @@ namespace MinakoNoTango.Tests.LibraryTests
         private IDataAccess initiateFakeDatabase()
         {
             var mockDataAccess = new Mock<IDataAccess>();
+
+            // Mock GetAll
             mockDataAccess.Setup(x => x.GetAll()).Returns(new List<PhraseEntity>()
             {
                 new PhraseEntity(){ Id = 1, EnglishPhrase = "Good morning!", AuthorName = "Minako" },
@@ -49,6 +51,7 @@ namespace MinakoNoTango.Tests.LibraryTests
                 new PhraseEntity(){ Id = 4, EnglishPhrase = "I love to take photos", AuthorName = "Minako" }
             });
 
+            // Mock GetSingle
             mockDataAccess.Setup(x => x.GetSingle(It.IsAny<int>())).Returns(
                 new PhraseEntity()
                 {
@@ -57,6 +60,18 @@ namespace MinakoNoTango.Tests.LibraryTests
                     SpanishPhrase = It.IsAny<string>(),
                     JapansePhrase = It.IsAny<string>()
                 });
+
+            // Mock Add
+            mockDataAccess
+                .Setup(x => x.Add(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(
+                    new PhraseEntity()
+                    {
+                        Id = It.IsAny<int>(),
+                        EnglishPhrase = It.IsAny<string>(),
+                        SpanishPhrase = It.IsAny<string>(),
+                        JapansePhrase = It.IsAny<string>()
+                    });
 
 
             return mockDataAccess.Object;
@@ -119,13 +134,13 @@ namespace MinakoNoTango.Tests.LibraryTests
             };
 
             var dataAccessWithTestPhrase = new Mock<IDataAccess>();
-            dataAccessWithTestPhrase.Setup(x => 
+            dataAccessWithTestPhrase.Setup(x =>
                 x.GetSingle(It.IsAny<int>())).Returns(testPhrase);
             dataAccessWithTestPhrase.Setup(x =>
-               x.Update(It.IsAny<int>(), It.IsAny<PhraseEntity>()))
+               x.Update(It.IsAny<PhraseEntity>()))
                .Returns(true);
-         
-            IMinakoNoTangoLibrary libWithTestData = 
+
+            IMinakoNoTangoLibrary libWithTestData =
                 new MinakoNoTangoLibrary(dataAccessWithTestPhrase.Object);
 
             string correction = "Machigai wa kore desu";
@@ -149,7 +164,7 @@ namespace MinakoNoTango.Tests.LibraryTests
 
             _testSecurityToken.Username = author;
             PhraseEntity newPhrase = _lib.AddEnglishPhrase(_testSecurityToken, phrase, comment);
-            
+
             Assert.IsNotNull(newPhrase);
             Assert.AreEqual(author, newPhrase.AuthorName);
             Assert.AreEqual(phrase, newPhrase.EnglishPhrase);

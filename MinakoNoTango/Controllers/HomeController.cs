@@ -56,9 +56,10 @@ namespace MinakoNoTango.Controllers
         }
 
         [HttpGet]
-        public ActionResult ViewPhrase()
+        public ActionResult ViewPhrase(int idPhrase = -1)
         {
-            return View("Detail", new PhraseEntity());
+            PhraseEntity phrase = _lib.GetPhraseDetail(_token, idPhrase);
+            return View("Detail", phrase);
         }
 
     }

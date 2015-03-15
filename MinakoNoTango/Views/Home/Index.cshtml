@@ -20,7 +20,7 @@
                         <td>Ingles: @phrase.EnglishPhrase</td>
                         <td>Japones: @phrase.JapansePhrase</td>
                         <td>Autor: @phrase.AuthorName</td>
-                        <td>@Html.ActionLink("View", "ViewPhrase");</td>
+                        <td>@Html.ActionLink("View", "ViewPhrase", new { idPhrase = @phrase.Id });</td>
                     </tr>
                 }
             }

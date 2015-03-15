@@ -14,18 +14,20 @@ namespace MinakoNoTangoLib.Library
         bool AddEnglishCorrection(SecurityToken token, int phraseId, string correction, string comment);
         bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction, string comment);
 
-        PhraseEntity AddEnglishPhrase(SecurityToken _testSecurityToken, string phrase, string comment);
+        // Add english phrase
+        PhraseEntity AddEnglishPhrase(SecurityToken token, string phrase);
+        PhraseEntity AddEnglishPhrase(SecurityToken token, string phrase, string comment);
     }
 
     public class MinakoNoTangoLibrary : IMinakoNoTangoLibrary
     {
-        private readonly IDataAccess _dataAcces;
+        private readonly IDataAccess _repository;
 
         public MinakoNoTangoLibrary(IDataAccess dataAccess)
         {
             if (dataAccess != null)
             {
-                _dataAcces = dataAccess;
+                _repository = dataAccess;
             }
             else
             {
@@ -35,12 +37,12 @@ namespace MinakoNoTangoLib.Library
 
         public IList<PhraseEntity> GetAllPhrases(SecurityToken token)
         {
-            return _dataAcces.GetAll();
+            return _repository.GetAll();
         }
 
         public PhraseEntity GetPhraseDetail(SecurityToken token, int phraseId)
         {
-            return _dataAcces.GetSingle(phraseId);
+            return _repository.GetSingle(phraseId);
         }
 
         public bool AddEnglishCorrection(SecurityToken token, int phraseId, string correction, string comment)
@@ -49,21 +51,32 @@ namespace MinakoNoTangoLib.Library
         }
 
 
-        public bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction, string comment)
+        public bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction)
         {
-            PhraseEntity storedPhrase = _dataAcces.GetSingle(phraseId);
+            PhraseEntity storedPhrase = _repository.GetSingle(phraseId);
             storedPhrase.JapansePhrase = correction;
             return true;
         }
 
+        #region Add english phrase
+        public PhraseEntity AddEnglishPhrase(SecurityToken token, string englishPhrase)
+        {
+            return this.AddEnglishPhrase(token, englishPhrase, null);
+        }
 
         public PhraseEntity AddEnglishPhrase(SecurityToken token, string englishPhrase, string comment)
         {
-            PhraseEntity phrase = _dataAcces.Add(token.Username, englishPhrase, comment);
-            phrase.AuthorName = token.Username;
-            phrase.EnglishPhrase = englishPhrase;
-            phrase.Comment = comment;
-            return phrase;
+            return _repository.Add(token.Username, englishPhrase, comment);
+        }
+        #endregion
+
+
+
+
+
+        public bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction, string comment)
+        {
+            throw new NotImplementedException();
         }
     }
 }

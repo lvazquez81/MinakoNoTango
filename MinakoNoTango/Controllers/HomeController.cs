@@ -1,5 +1,7 @@
 ﻿using MinakoNoTangoLib.Entities;
+using MinakoNoTangoLib.Library;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,32 +11,48 @@ namespace MinakoNoTango.Controllers
 {
     public class HomeController : Controller
     {
-        private List<PhraseEntity> getPhrases()
+        private IMinakoNoTangoLibrary _lib;
+        private SecurityToken _token;
+
+        public HomeController()
         {
-            return new List<PhraseEntity>()
+            _token = new SecurityToken()
             {
-                new PhraseEntity(){ Id = 1, EnglishPhrase = "Good morning!", AuthorName = "Minako" },
-                new PhraseEntity(){ Id = 2, JapansePhrase = "Konnichi wa!", AuthorName = "Chibi" },
-                new PhraseEntity(){ Id = 3, JapansePhrase = "Dokka e onsen e ikimashouka", AuthorName = "Chibi" },
-                new PhraseEntity(){ Id = 4, EnglishPhrase = "I love to take photos", AuthorName = "Minako" }
+                Username = "Luis",
+                ExpirationDate = DateTime.Now.AddDays(1),
+                Token = "abc123"
             };
+
+            var repository = new MemoryRepository();
+            _lib = new MinakoNoTangoLibrary(repository);
         }
 
         public ActionResult Index()
         {
-            return View(getPhrases());
+            IList data = _lib.GetAllPhrases(_token).ToList();
+            return View(data);
         }
 
         [HttpGet]
         public ActionResult AddPhrase()
         {
-            return View();
+            return View(new PhraseEntity());
         }
 
         [HttpPost]
-        public ActionResult Save()
+        public ActionResult Save(PhraseEntity viewPhrase)
         {
-            return View("Index",getPhrases());
+            PhraseEntity phrase = _lib.AddEnglishPhrase(_token, viewPhrase.EnglishPhrase);
+            if (phrase != null)
+            {
+                IList data = _lib.GetAllPhrases(_token).ToList();
+                return View("Index", data);
+            }
+            else
+            {
+                return View(phrase);
+            }
+            
         }
 
         [HttpGet]

@@ -3,34 +3,26 @@
     ViewBag.Title = "Home";
 }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Minako no Tango</title>
-</head>
-<body>
-    <div>
-        <p>Lista de frases</p>
-        <table>
-            @{
-                foreach (var phrase in this.Model)
-                {
-                <tr>
-                    <td>Espanol: @phrase.SpanishPhrase</td>
-                    <td>Ingles: @phrase.EnglishPhrase</td>
-                    <td>Japones: @phrase.JapansePhrase</td>
-                    <td>Autor: @phrase.AuthorName</td>
-                    <td>@Html.ActionLink(linkText: "View", actionName: "ViewPhrase",
+<div>
+    <p>Lista de frases</p>
+    <table>
+        @{
+            foreach (var phrase in this.Model)
+            {
+            <tr>
+                <td>Espanol: @phrase.SpanishPhrase</td>
+                <td>Ingles: @phrase.EnglishPhrase</td>
+                <td>Japones: @phrase.JapansePhrase</td>
+                <td>Autor: @phrase.AuthorName</td>
+                <td>@Html.ActionLink(linkText: "View", actionName: "ViewPhrase",
                     controllerName: "Home", routeValues: new { idPhrase = @phrase.Id }, htmlAttributes: null);</td>
-                </tr>
-                }
+            </tr>
             }
-        </table>
-    </div>
+        }
+    </table>
+</div>
 
-    <div>
-        @Html.ActionLink(linkText: "Agregar frase", actionName: "AddPhrase");
-    </div>
+<div>
+    @Html.ActionLink(linkText: "Agregar frase", actionName: "AddPhrase");
+</div>
 
-</body>
-</html>

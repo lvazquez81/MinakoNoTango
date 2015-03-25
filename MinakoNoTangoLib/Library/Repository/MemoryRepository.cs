@@ -46,7 +46,7 @@ namespace MinakoNoTangoLib.Library
                 Id = MemoryRepository._Id++,
                 AuthorName = authorName,
                 Comment = comment,
-                EnglishPhrase = englishPhrase
+                Expression = englishPhrase
             };
 
             _data.Add(entry);

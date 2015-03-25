@@ -40,10 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\CommentEntity.cs" />
+    <Compile Include="Entities\LanguageType.cs" />
     <Compile Include="Entities\MessageEntity.cs" />
     <Compile Include="Entities\PhraseEntity.cs" />
     <Compile Include="Entities\TokenEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Library\Models\LoginModel.cs" />
+    <Compile Include="Library\Models\StudentModel.cs" />
+    <Compile Include="Library\Models\TeacherModel.cs" />
     <Compile Include="Library\Repository\IDataAccess.cs" />
     <Compile Include="Library\IMinakoNoTangoAuthentication.cs" />
     <Compile Include="Library\Repository\MemoryRepository.cs" />

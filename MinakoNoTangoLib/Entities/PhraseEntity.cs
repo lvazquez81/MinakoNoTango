@@ -9,9 +9,8 @@ namespace MinakoNoTangoLib.Entities
     public class PhraseEntity
     {
         public int Id { get; set; }
-        public string EnglishPhrase { get; set; }
-        public string SpanishPhrase { get; set; }
-        public string JapansePhrase { get; set; }
+        public string Expression { get; set; }
+        public LanguageType Language { get; set; }
 
         // Author 
         public int AuthorId { get; set; }
@@ -21,6 +20,12 @@ namespace MinakoNoTangoLib.Entities
         public string Comment { get; set; }
         public IList<CommentEntity> Comments { get; set; }
 
-        
+        public IList<CorrectionEntity> Corrections { get; set; }
+    }
+
+    public class CorrectionEntity
+    {
+        public string Expression { get; set; }
+        public DateTime CorrecctedOn { get; set; }
     }
 }

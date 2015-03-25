@@ -42,7 +42,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             Assert.IsNotNull(phrase);
             Assert.IsTrue(phrase.Id > 0);
             Assert.AreEqual(authorName, phrase.AuthorName);
-            Assert.AreEqual(englishPhrase, phrase.EnglishPhrase);
+            Assert.AreEqual(englishPhrase, phrase.Expression);
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             Assert.IsNotNull(phrase);
             Assert.IsTrue(phrase.Id > 0);
             Assert.AreEqual(authorName, phrase.AuthorName);
-            Assert.AreEqual(englishPhrase, phrase.EnglishPhrase);
+            Assert.AreEqual(englishPhrase, phrase.Expression);
             Assert.AreEqual(comment, phrase.Comment);
         }
 
@@ -88,7 +88,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             int storedPhraseId = storedPhrase.Id;
             string modification = Faker.TextFaker.Sentence();
 
-            storedPhrase.EnglishPhrase = modification;
+            storedPhrase.Expression = modification;
 
             IDataAccess repo = new MemoryRepository();
             bool updated = repo.Update(storedPhrase);
@@ -97,7 +97,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             storedPhrase = repo.GetSingle(storedPhrase.Id);
             Assert.IsNotNull(storedPhrase);
             Assert.AreEqual(storedPhraseId, storedPhrase.Id);
-            Assert.AreEqual(modification, storedPhrase.EnglishPhrase);
+            Assert.AreEqual(modification, storedPhrase.Expression);
         }
     }
 }

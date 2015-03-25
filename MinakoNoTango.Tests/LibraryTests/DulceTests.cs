@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MinakoNoTangoLib.Entities;
 using MinakoNoTangoLib.Library;
+using MinakoNoTangoLib.Library.Models;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,15 @@ namespace MinakoNoTango.Tests.LibraryTests
     [TestClass]
     public class DulceTests
     {
-        private IMinakoNoTangoLibrary _lib;
+        private StudentModel _lib;
         private SecurityToken _testSecurityToken;
+        private IDataAccess _repository;
 
+        #region Test setup
         [TestInitialize]
         public void TestSetup()
         {
             IDataAccess testRepository = initiateFakeDatabase();
-            _lib = new MinakoNoTangoLibrary(testRepository);
             _testSecurityToken = getTestSecurityToken();
         }
 
@@ -45,10 +47,10 @@ namespace MinakoNoTango.Tests.LibraryTests
             // Mock GetAll
             mockDataAccess.Setup(x => x.GetAll()).Returns(new List<PhraseEntity>()
             {
-                new PhraseEntity(){ Id = 1, EnglishPhrase = "Good morning!", AuthorName = "Minako" },
-                new PhraseEntity(){ Id = 2, JapansePhrase = "Konnichi wa!", AuthorName = "Chibi" },
-                new PhraseEntity(){ Id = 3, JapansePhrase = "Dokka e onsen e ikimashouka", AuthorName = "Chibi" },
-                new PhraseEntity(){ Id = 4, EnglishPhrase = "I love to take photos", AuthorName = "Minako" }
+                new PhraseEntity(){ Id = 1, Expression = "Good morning!", AuthorName = "Minako" },
+                new PhraseEntity(){ Id = 2, Expression = "Konnichi wa!", AuthorName = "Chibi" },
+                new PhraseEntity(){ Id = 3, Expression = "Dokka e onsen e ikimashouka", AuthorName = "Chibi" },
+                new PhraseEntity(){ Id = 4, Expression = "I love to take photos", AuthorName = "Minako" }
             });
 
             // Mock GetSingle
@@ -56,9 +58,7 @@ namespace MinakoNoTango.Tests.LibraryTests
                 new PhraseEntity()
                 {
                     Id = It.IsAny<int>(),
-                    EnglishPhrase = It.IsAny<string>(),
-                    SpanishPhrase = It.IsAny<string>(),
-                    JapansePhrase = It.IsAny<string>()
+                    Expression = It.IsAny<string>()
                 });
 
             // Mock Add
@@ -68,36 +68,50 @@ namespace MinakoNoTango.Tests.LibraryTests
                     new PhraseEntity()
                     {
                         Id = It.IsAny<int>(),
-                        EnglishPhrase = It.IsAny<string>(),
-                        SpanishPhrase = It.IsAny<string>(),
-                        JapansePhrase = It.IsAny<string>()
+                        Expression = It.IsAny<string>()
                     });
 
 
             return mockDataAccess.Object;
         }
+        #endregion
 
         [TestMethod]
         public void Dulce_QuieroHacerLogin_MeDejaEntrar()
         {
-            string userName = "minako";
-            string password = "jesuiminako";
-            IMinakoNoTangoAuthentication auth = new MinakoNoTangoAuthentication();
+            LoginModel login = new LoginModel();
+            login.Username = "minako";
+            login.Password = "jesusminako";
 
-            SecurityToken token = auth.GetAuthenticationToken(userName, password);
+            SecurityToken token = login.GetAuthenticationToken();
 
             Assert.IsNotNull(token);
             Assert.IsFalse(string.IsNullOrWhiteSpace(token.Token));
-            Assert.AreEqual(userName, token.Username);
+            Assert.AreEqual(login.Username, token.Username);
             Assert.IsTrue(token.ExpirationDate > DateTime.Now);
+        }
 
-            // TODO: Validate view 
+        [TestMethod]
+        public void Dulce_QuieroAgregarMiFrase_CapturaDeFraseNueva()
+        {
+            StudentModel student = new StudentModel(_repository, _testSecurityToken);
+            student.Expression = "Machigai ga aru mono";
+            student.Author = _testSecurityToken.Username;
+            student.Language = LanguageType.Japanese;
+
+            PhraseEntity phrase = student.SaveExpression();
+
+            Assert.IsNotNull(phrase);
+            Assert.AreEqual(student.Expression, phrase.Expression);
+            Assert.AreEqual(student.Author, phrase.AuthorName);
+            Assert.AreEqual(student.Language, phrase.Language);
         }
 
         [TestMethod]
         public void Dulce_QuieroVerLasFrases_MuestraListaDeFrases()
         {
-            List<PhraseEntity> phrases = _lib.GetAllPhrases(_testSecurityToken).ToList();
+            StudentModel student = new StudentModel(_repository, _testSecurityToken);
+            List<PhraseEntity> phrases = _lib.GetAllPhrases().ToList();
 
             Assert.IsNotNull(phrases);
             CollectionAssert.AllItemsAreNotNull(phrases);
@@ -106,73 +120,88 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestMethod]
         public void Dulce_QuieroVerUnaFraseDeLuis_MuestraDetalleDeFrase()
         {
-            PhraseEntity testPhrase = new PhraseEntity()
+            string author = "Luis";
+            
+            // Repository contains an expression
+            var repository = new Mock<IDataAccess>();
+            repository.Setup(x => x.GetSingle(It.IsAny<int>())).Returns(new PhraseEntity()
             {
-                Id = 1,
-                JapansePhrase = "Machigai ga aru mono",
-                AuthorName = "Chibi"
-            };
+                Id = Faker.NumberFaker.Number(),
+                Expression = Faker.TextFaker.Sentence(),
+                AuthorName = author
+            });
 
-            var dataAccessWithTestPhrase = new Mock<IDataAccess>();
-            dataAccessWithTestPhrase.Setup(x => x.GetSingle(It.IsAny<int>())).Returns(testPhrase);
-            IMinakoNoTangoLibrary lib = new MinakoNoTangoLibrary(dataAccessWithTestPhrase.Object);
-
-            PhraseEntity phrase = lib.GetPhraseDetail(_testSecurityToken, testPhrase.Id);
+            TeacherModel student = new TeacherModel(repository.Object, _testSecurityToken);
+            PhraseEntity phrase = student.GetExpression(1);
 
             Assert.IsNotNull(phrase);
-            Assert.AreEqual(testPhrase.Id, phrase.Id);
+            Assert.AreEqual(author, phrase.AuthorName);
         }
 
         [TestMethod]
         public void Dulce_QuieroCorregirUnaFraseDeLuis_CapturaDeCorreccion()
         {
-            PhraseEntity testPhrase = new PhraseEntity()
-            {
-                Id = 1,
-                JapansePhrase = "Machigai ga aru mono",
-                AuthorName = "Chibi"
-            };
+            string author = "Luis";
+            string sampleExpression = "Machigai aru toko";
+            string originalComment = "Como se usa el toko";
+            
+            // Repository contains an expression
+            var repository = new Mock<IDataAccess>();
+            repository.Setup(x => x.GetSingle(It.IsAny<int>()))
+                .Returns(new PhraseEntity()
+                    {
+                        Id = Faker.NumberFaker.Number(),
+                        Expression = sampleExpression,
+                        AuthorName = author,
+                        Comment = originalComment
+                    });
 
-            var dataAccessWithTestPhrase = new Mock<IDataAccess>();
-            dataAccessWithTestPhrase.Setup(x =>
-                x.GetSingle(It.IsAny<int>())).Returns(testPhrase);
-            dataAccessWithTestPhrase.Setup(x =>
-               x.Update(It.IsAny<PhraseEntity>()))
-               .Returns(true);
+            TeacherModel teacher = new TeacherModel(repository.Object, _testSecurityToken);
+            PhraseEntity expression = teacher.GetExpression(1);
+            teacher.ViewedExpression = expression;
+            teacher.Comment = "Se usa con particulas.";
+            teacher.Correction = "Machigai nai toko";
 
-            IMinakoNoTangoLibrary libWithTestData =
-                new MinakoNoTangoLibrary(dataAccessWithTestPhrase.Object);
+            bool result = teacher.AddCorrection();
 
-            string correction = "Machigai wa kore desu";
-            string comment = "El error esta en la particula.";
-
-            bool result = libWithTestData.AddJapaneseCorrection(_testSecurityToken, testPhrase.Id, correction, comment);
             Assert.IsTrue(result);
 
-            PhraseEntity correctedPhrase = libWithTestData.GetPhraseDetail(_testSecurityToken, testPhrase.Id);
-            Assert.IsNotNull(correctedPhrase);
-            Assert.AreEqual(testPhrase.Id, correctedPhrase.Id);
-            Assert.AreEqual(correction, correctedPhrase.JapansePhrase);
+            PhraseEntity corretedPhrase = teacher.GetExpression(1);
+            Assert.IsNotNull(corretedPhrase);
+            Assert.AreEqual(1, corretedPhrase.Id);
+            Assert.AreEqual(teacher.Correction, corretedPhrase.Expression);
+            Assert.IsTrue(corretedPhrase.Comments.Count == 1);
+            Assert.AreEqual(teacher.Comment, corretedPhrase.Comments[0].Comment);
         }
 
-        [TestMethod]
-        public void Dulce_QuieroAgregarMiFrase_CapturaDeFraseNueva()
-        {
-            string author = "Minako";
-            string phrase = "This is my new phrase.";
-            string comment = "Luis, me ayudas con esta?";
 
-            _testSecurityToken.Username = author;
-            PhraseEntity newPhrase = _lib.AddEnglishPhrase(_testSecurityToken, phrase, comment);
-
-            Assert.IsNotNull(newPhrase);
-            Assert.AreEqual(author, newPhrase.AuthorName);
-            Assert.AreEqual(phrase, newPhrase.EnglishPhrase);
-        }
 
         [TestMethod]
         public void Dulce_QuieroComentarSobreUnaFrase_CapturaDeComentario()
         {
+            string author = "Luis";
+            string sampleExpression = "Machigai aru toko";
+            string originalComment = "Como se usa el toko";
+
+            // Repository contains an expression
+            var repository = new Mock<IDataAccess>();
+            repository.Setup(x => x.GetSingle(It.IsAny<int>()))
+                .Returns(new PhraseEntity()
+                {
+                    Id = Faker.NumberFaker.Number(),
+                    Expression = sampleExpression,
+                    AuthorName = author,
+                    Comment = originalComment
+                });
+
+            TeacherModel teacher = new TeacherModel(repository.Object, _testSecurityToken);
+            PhraseEntity expression = teacher.GetExpression(1);
+            teacher.ViewedExpression = expression;
+            teacher.Comment = "Se usa con particulas.";
+            teacher.Correction = "Machigai nai toko";
+
+            bool result = teacher.AddCorrection();
+            Assert.IsTrue(result);
         }
     }
 }

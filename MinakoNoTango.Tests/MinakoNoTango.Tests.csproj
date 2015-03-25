@@ -99,8 +99,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LibraryTests\AdminTests.cs" />
     <Compile Include="LibraryTests\DulceTests.cs" />
+    <Compile Include="LibraryTests\StudentTests.cs" />
     <Compile Include="LibraryTests\RepositoryTests.cs" />
+    <Compile Include="LibraryTests\TeacherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

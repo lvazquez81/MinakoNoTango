@@ -54,7 +54,7 @@ namespace MinakoNoTangoLib.Library
         public bool AddJapaneseCorrection(SecurityToken token, int phraseId, string correction)
         {
             PhraseEntity storedPhrase = _repository.GetSingle(phraseId);
-            storedPhrase.JapansePhrase = correction;
+            storedPhrase.Expression = correction;
             return true;
         }
 

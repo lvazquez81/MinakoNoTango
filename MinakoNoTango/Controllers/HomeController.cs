@@ -42,7 +42,7 @@ namespace MinakoNoTango.Controllers
         [HttpPost]
         public ActionResult Save(PhraseEntity viewPhrase)
         {
-            PhraseEntity phrase = _lib.AddEnglishPhrase(_token, viewPhrase.EnglishPhrase);
+            PhraseEntity phrase = _lib.AddEnglishPhrase(_token, viewPhrase.Expression);
             if (phrase != null)
             {
                 IList data = _lib.GetAllPhrases(_token).ToList();

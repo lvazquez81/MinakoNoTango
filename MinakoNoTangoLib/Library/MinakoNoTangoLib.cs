@@ -61,12 +61,14 @@ namespace MinakoNoTangoLib.Library
         #region Add english phrase
         public PhraseEntity AddEnglishPhrase(SecurityToken token, string englishPhrase)
         {
-            return this.AddEnglishPhrase(token, englishPhrase, null);
+            //return this.AddEnglishPhrase(token, englishPhrase, null);
+            throw new NotImplementedException();
         }
 
         public PhraseEntity AddEnglishPhrase(SecurityToken token, string englishPhrase, string comment)
         {
-            return _repository.Add(token.Username, englishPhrase, comment);
+            //return _repository.Add(token.Username, englishPhrase, comment);
+            throw new NotImplementedException();
         }
         #endregion
 

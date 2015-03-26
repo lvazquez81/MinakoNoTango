@@ -59,13 +59,13 @@ namespace MinakoNoTango.Tests.LibraryTests
 
             // Mock Add
             mockDataAccess
-                .Setup(x => x.Add(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(x => x.Add(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<LanguageType>(),
+                    It.IsAny<string>()))
                 .Returns(
-                    new PhraseEntity()
-                    {
-                        Id = It.IsAny<int>(),
-                        Expression = It.IsAny<string>()
-                    });
+                   It.IsAny<int>());
 
 
             return mockDataAccess.Object;

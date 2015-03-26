@@ -34,24 +34,25 @@ namespace MinakoNoTangoLib.Library
         }
 
         #region Add
-        public PhraseEntity Add(string authorName, string englishPhrase)
+        public int Add(string authorName, string expression, LanguageType language)
         {
-            return this.Add(authorName, englishPhrase, null);
+            return this.Add(authorName, expression, language, null);
         }
 
-        public PhraseEntity Add(string authorName, string englishPhrase, string comment)
+        public int Add(string authorName, string expression, LanguageType language, string comment)
         {
             PhraseEntity entry = new PhraseEntity()
             {
                 Id = MemoryRepository._Id++,
                 AuthorName = authorName,
+                Language = language,
                 Comment = comment,
-                Expression = englishPhrase
+                Expression = expression
             };
 
             _data.Add(entry);
 
-            return entry;
+            return entry.Id;
         }
         #endregion
 

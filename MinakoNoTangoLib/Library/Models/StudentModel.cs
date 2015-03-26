@@ -26,7 +26,7 @@ namespace MinakoNoTangoLib.Library.Models
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException();
             }
 
             if (dataAccess != null)
@@ -35,13 +35,28 @@ namespace MinakoNoTangoLib.Library.Models
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException();
             }
         }
 
         public PhraseEntity SaveExpression()
         {
-            return _repository.Add(_token.Username, this.Expression, this.Comment);
+            PhraseEntity phrase = null;
+            int phraseId = _repository.Add(_token.Username, this.Expression, this.Language, this.Comment);
+
+            if (phraseId > 0)
+            {
+                phrase = new PhraseEntity()
+                {
+                    Id = phraseId,
+                    AuthorName = _token.Username,
+                    Expression = this.Expression,
+                    Language = this.Language,
+                    Comment = this.Comment
+                };
+            }
+
+            return phrase;
         }
 
         public IList<PhraseEntity> GetAllPhrases()

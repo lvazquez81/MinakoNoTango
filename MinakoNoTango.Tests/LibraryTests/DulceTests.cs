@@ -22,7 +22,7 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestInitialize]
         public void TestSetup()
         {
-            IDataAccess testRepository = initiateFakeDatabase();
+            _repository = initiateFakeDatabase();
             _testSecurityToken = getTestSecurityToken();
         }
 
@@ -57,19 +57,18 @@ namespace MinakoNoTango.Tests.LibraryTests
             mockDataAccess.Setup(x => x.GetSingle(It.IsAny<int>())).Returns(
                 new PhraseEntity()
                 {
-                    Id = It.IsAny<int>(),
-                    Expression = It.IsAny<string>()
+                    Id = 1,
+                    Expression = Faker.TextFaker.Sentence()
                 });
 
             // Mock Add
             mockDataAccess
-                .Setup(x => x.Add(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(
-                    new PhraseEntity()
-                    {
-                        Id = It.IsAny<int>(),
-                        Expression = It.IsAny<string>()
-                    });
+                .Setup(x => x.Add(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<LanguageType>(),
+                    It.IsAny<string>()))
+                .Returns(1);
 
 
             return mockDataAccess.Object;
@@ -111,7 +110,7 @@ namespace MinakoNoTango.Tests.LibraryTests
         public void Dulce_QuieroVerLasFrases_MuestraListaDeFrases()
         {
             StudentModel student = new StudentModel(_repository, _testSecurityToken);
-            List<PhraseEntity> phrases = _lib.GetAllPhrases().ToList();
+            List<PhraseEntity> phrases = student.GetAllPhrases().ToList();
 
             Assert.IsNotNull(phrases);
             CollectionAssert.AllItemsAreNotNull(phrases);
@@ -146,30 +145,22 @@ namespace MinakoNoTango.Tests.LibraryTests
             string originalComment = "Como se usa el toko";
             
             // Repository contains an expression
-            var repository = new Mock<IDataAccess>();
-            repository.Setup(x => x.GetSingle(It.IsAny<int>()))
-                .Returns(new PhraseEntity()
-                    {
-                        Id = Faker.NumberFaker.Number(),
-                        Expression = sampleExpression,
-                        AuthorName = author,
-                        Comment = originalComment
-                    });
+            var memRepository = new MemoryRepository();
+            int id = memRepository.Add(author, sampleExpression, LanguageType.English, originalComment);
 
-            TeacherModel teacher = new TeacherModel(repository.Object, _testSecurityToken);
-            PhraseEntity expression = teacher.GetExpression(1);
+            TeacherModel teacher = new TeacherModel(memRepository, _testSecurityToken);
+            PhraseEntity expression = teacher.GetExpression(id);
             teacher.ViewedExpression = expression;
             teacher.Comment = "Se usa con particulas.";
             teacher.Correction = "Machigai nai toko";
 
             bool result = teacher.AddCorrection();
-
             Assert.IsTrue(result);
 
-            PhraseEntity corretedPhrase = teacher.GetExpression(1);
+            PhraseEntity corretedPhrase = teacher.GetExpression(id);
             Assert.IsNotNull(corretedPhrase);
-            Assert.AreEqual(1, corretedPhrase.Id);
-            Assert.AreEqual(teacher.Correction, corretedPhrase.Expression);
+            Assert.AreEqual(id, corretedPhrase.Id);
+            Assert.AreEqual(sampleExpression, corretedPhrase.Expression);
             Assert.IsTrue(corretedPhrase.Comments.Count == 1);
             Assert.AreEqual(teacher.Comment, corretedPhrase.Comments[0].Comment);
         }
@@ -184,24 +175,26 @@ namespace MinakoNoTango.Tests.LibraryTests
             string originalComment = "Como se usa el toko";
 
             // Repository contains an expression
-            var repository = new Mock<IDataAccess>();
-            repository.Setup(x => x.GetSingle(It.IsAny<int>()))
-                .Returns(new PhraseEntity()
-                {
-                    Id = Faker.NumberFaker.Number(),
-                    Expression = sampleExpression,
-                    AuthorName = author,
-                    Comment = originalComment
-                });
+            var memRepository = new MemoryRepository();
+            int id = memRepository.Add(author, sampleExpression, LanguageType.English, originalComment);
 
-            TeacherModel teacher = new TeacherModel(repository.Object, _testSecurityToken);
-            PhraseEntity expression = teacher.GetExpression(1);
+            TeacherModel teacher = new TeacherModel(memRepository, _testSecurityToken);
+            PhraseEntity expression = teacher.GetExpression(id);
             teacher.ViewedExpression = expression;
             teacher.Comment = "Se usa con particulas.";
             teacher.Correction = "Machigai nai toko";
 
             bool result = teacher.AddCorrection();
             Assert.IsTrue(result);
+
+            PhraseEntity corretedPhrase = teacher.GetExpression(id);
+            Assert.IsNotNull(corretedPhrase);
+            Assert.AreEqual(id, corretedPhrase.Id);
+            Assert.AreEqual(sampleExpression, corretedPhrase.Expression);
+            Assert.IsTrue(corretedPhrase.Comments.Count == 1);
+            Assert.AreEqual(teacher.Comment, corretedPhrase.Comments[0].Comment);
+            Assert.IsTrue(corretedPhrase.Corrections.Count == 1);
+            Assert.AreEqual(teacher.Correction, corretedPhrase.Corrections[0].Expression);
         }
     }
 }

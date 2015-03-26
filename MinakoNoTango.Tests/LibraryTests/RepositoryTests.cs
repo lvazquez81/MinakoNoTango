@@ -19,7 +19,15 @@ namespace MinakoNoTango.Tests.LibraryTests
             string comment = Faker.TextFaker.Sentences(3);
 
             IDataAccess repo = new MemoryRepository();
-            PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
+            int phraseId = repo.Add(authorName, englishPhrase, LanguageType.English, comment);
+
+            PhraseEntity phrase = new PhraseEntity()
+            {
+                Id = phraseId,
+                AuthorName = authorName,
+                Expression = englishPhrase,
+                Comment = comment
+            };
 
             return phrase;
         }
@@ -34,47 +42,58 @@ namespace MinakoNoTango.Tests.LibraryTests
         public void MemRepository_AddPhrase()
         {
             string authorName = Faker.NameFaker.Name();
-            string englishPhrase = Faker.TextFaker.Sentence();
+            string expression = Faker.TextFaker.Sentence();
+            LanguageType language = LanguageType.English;
             
             IDataAccess repo = new MemoryRepository();
-            PhraseEntity phrase = repo.Add(authorName, englishPhrase);
+            //PhraseEntity phrase = repo.Add(authorName, englishPhrase);
+            int phraseId = repo.Add(authorName, expression, language);
 
-            Assert.IsNotNull(phrase);
-            Assert.IsTrue(phrase.Id > 0);
-            Assert.AreEqual(authorName, phrase.AuthorName);
-            Assert.AreEqual(englishPhrase, phrase.Expression);
+            Assert.IsTrue(phraseId > 0);
+
+            //Assert.IsNotNull(phrase);
+            //Assert.IsTrue(phrase.Id > 0);
+            //Assert.AreEqual(authorName, phrase.AuthorName);
+            //Assert.AreEqual(englishPhrase, phrase.Expression);
         }
 
         [TestMethod]
         public void MemRepository_AddPhraseWithComment()
         {
             string authorName = Faker.NameFaker.Name();
-            string englishPhrase = Faker.TextFaker.Sentence();
+            string expression = Faker.TextFaker.Sentence();
             string comment = Faker.TextFaker.Sentences(3);
+            LanguageType language = LanguageType.English;
 
             IDataAccess repo = new MemoryRepository();
-            PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
+            //PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
+            int phraseId = repo.Add(authorName, expression, language, comment);
 
-            Assert.IsNotNull(phrase);
-            Assert.IsTrue(phrase.Id > 0);
-            Assert.AreEqual(authorName, phrase.AuthorName);
-            Assert.AreEqual(englishPhrase, phrase.Expression);
-            Assert.AreEqual(comment, phrase.Comment);
+            Assert.IsTrue(phraseId > 0);
+
+            //Assert.IsNotNull(phrase);
+            //Assert.IsTrue(phrase.Id > 0);
+            //Assert.AreEqual(authorName, phrase.AuthorName);
+            //Assert.AreEqual(englishPhrase, phrase.Expression);
+            //Assert.AreEqual(comment, phrase.Comment);
         }
 
         [TestMethod]
         public void MemRepository_RemovePhrase()
         {
             string authorName = Faker.NameFaker.Name();
-            string englishPhrase = Faker.TextFaker.Sentence();
+            string expression = Faker.TextFaker.Sentence();
             string comment = Faker.TextFaker.Sentences(3);
+            LanguageType language = LanguageType.English;
 
             IDataAccess repo = new MemoryRepository();
-            PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
-            Assert.IsNotNull(phrase);
+            //PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
+            int phraseId = repo.Add(authorName, expression, language, comment);
+            Assert.IsTrue(phraseId > 0);
+            //Assert.IsNotNull(phrase);
 
-            bool hasBeenDeleted = repo.Remove(phrase.Id);
-            PhraseEntity deletedPhrase = repo.GetSingle(phrase.Id);
+            bool hasBeenDeleted = repo.Remove(phraseId);
+            PhraseEntity deletedPhrase = repo.GetSingle(phraseId);
 
             Assert.IsTrue(hasBeenDeleted);
             Assert.IsNull(deletedPhrase);

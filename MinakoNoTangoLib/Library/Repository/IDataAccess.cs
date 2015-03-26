@@ -13,8 +13,8 @@ namespace MinakoNoTangoLib.Library
         PhraseEntity GetSingle(int phraseId);
 
         // Adding
-        PhraseEntity Add(string authorName, string englishPhrase);
-        PhraseEntity Add(string authorName, string englishPhrase, string comment);
+        int Add(string authorName, string expression, LanguageType language);
+        int Add(string authorName, string expression, LanguageType language, string comment);
 
 
         bool Remove(int phraseId);

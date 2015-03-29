@@ -23,7 +23,7 @@ namespace MinakoNoTango.Controllers
                 Token = "abc123"
             };
 
-            var repository = new MemoryRepository(1);
+            var repository = new MemoryRepository();
             _lib = new MinakoNoTangoLibrary(repository);
         }
 

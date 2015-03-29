@@ -10,30 +10,17 @@
 
         @Html.HiddenFor(model => model.Id)
 
+        <!-- Expression -->
         <div class="editor-label">
-            @Html.LabelFor(model => model.EnglishPhrase)
+            @Html.LabelFor(model => model.Expression)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.EnglishPhrase)
-            @Html.ValidationMessageFor(model => model.EnglishPhrase)
+            @Html.EditorFor(model => model.Expression)
+            @Html.ValidationMessageFor(model => model.Expression)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SpanishPhrase)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SpanishPhrase)
-            @Html.ValidationMessageFor(model => model.SpanishPhrase)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.JapansePhrase)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.JapansePhrase)
-            @Html.ValidationMessageFor(model => model.JapansePhrase)
-        </div>
-
+        <!-- Author -->
         <div class="editor-label">
             @Html.LabelFor(model => model.AuthorName)
         </div>

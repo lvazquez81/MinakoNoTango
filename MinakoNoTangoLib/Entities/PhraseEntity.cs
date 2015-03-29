@@ -21,6 +21,19 @@ namespace MinakoNoTangoLib.Entities
         public IList<CommentEntity> Comments { get; set; }
 
         public IList<CorrectionEntity> Corrections { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            PhraseEntity x = obj as PhraseEntity;
+            if (x != null)
+            {
+                return x.Id == this.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public class CorrectionEntity

@@ -161,11 +161,9 @@ namespace MinakoNoTango.Tests.LibraryTests
             Assert.IsNotNull(corretedPhrase);
             Assert.AreEqual(id, corretedPhrase.Id);
             Assert.AreEqual(sampleExpression, corretedPhrase.Expression);
-            Assert.IsTrue(corretedPhrase.Comments.Count == 1);
-            Assert.AreEqual(teacher.Comment, corretedPhrase.Comments[0].Comment);
+            Assert.IsTrue(corretedPhrase.Corrections.Count == 1);
+            Assert.AreEqual(teacher.Correction, corretedPhrase.Corrections[0].Expression);
         }
-
-
 
         [TestMethod]
         public void Dulce_QuieroComentarSobreUnaFrase_CapturaDeComentario()
@@ -190,11 +188,8 @@ namespace MinakoNoTango.Tests.LibraryTests
             PhraseEntity corretedPhrase = teacher.GetExpression(id);
             Assert.IsNotNull(corretedPhrase);
             Assert.AreEqual(id, corretedPhrase.Id);
-            Assert.AreEqual(sampleExpression, corretedPhrase.Expression);
             Assert.IsTrue(corretedPhrase.Comments.Count == 1);
             Assert.AreEqual(teacher.Comment, corretedPhrase.Comments[0].Comment);
-            Assert.IsTrue(corretedPhrase.Corrections.Count == 1);
-            Assert.AreEqual(teacher.Correction, corretedPhrase.Corrections[0].Expression);
         }
     }
 }

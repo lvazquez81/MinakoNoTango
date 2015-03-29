@@ -19,5 +19,7 @@ namespace MinakoNoTangoLib.Library
 
         bool Remove(int phraseId);
         bool Update(PhraseEntity phrase);
+
+        bool Initialize();
     }
 }

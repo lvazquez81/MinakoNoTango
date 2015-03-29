@@ -12,6 +12,7 @@ namespace MinakoNoTango.Tests.LibraryTests
     [TestClass]
     public class RepositoryTests
     {
+        #region Test helpers
         private PhraseEntity addPhraseToRepository()
         {
             string authorName = Faker.NameFaker.Name();
@@ -31,13 +32,8 @@ namespace MinakoNoTango.Tests.LibraryTests
 
             return phrase;
         }
+        #endregion
 
-        [TestInitialize]
-        public void SetupTest()
-        {
-            MemoryRepository.Initialize();
-        }
-        
         [TestMethod]
         public void MemRepository_AddPhrase()
         {
@@ -102,20 +98,29 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestMethod]
         public void MemRepository_ModifyPhrase()
         {
-            PhraseEntity storedPhrase = addPhraseToRepository();
-            
-            int storedPhraseId = storedPhrase.Id;
-            string modification = Faker.TextFaker.Sentence();
-
-            storedPhrase.Expression = modification;
-
             IDataAccess repo = new MemoryRepository();
-            bool updated = repo.Update(storedPhrase);
+            string authorName = Faker.NameFaker.Name();
+            string englishPhrase = Faker.TextFaker.Sentence();
+            string comment = Faker.TextFaker.Sentences(3);
+
+            int phraseId = repo.Add(authorName, englishPhrase, LanguageType.English, comment);
+
+            string modification = Faker.TextFaker.Sentence();
+            PhraseEntity updatedPhrase = new PhraseEntity()
+            {
+                Id = phraseId,
+                AuthorName = authorName,
+                Expression = modification,
+                Language = LanguageType.English,
+                Comment = comment
+            };
+
+            bool updated = repo.Update(updatedPhrase);
             Assert.IsTrue(updated);
 
-            storedPhrase = repo.GetSingle(storedPhrase.Id);
+            PhraseEntity storedPhrase = repo.GetSingle(updatedPhrase.Id);
             Assert.IsNotNull(storedPhrase);
-            Assert.AreEqual(storedPhraseId, storedPhrase.Id);
+            Assert.AreEqual(phraseId, storedPhrase.Id);
             Assert.AreEqual(modification, storedPhrase.Expression);
         }
     }

@@ -10,18 +10,23 @@ namespace MinakoNoTangoLib.Library
 {
     public class MemoryRepository : IDataAccess
     {
-        private static int _Id;
-        private static IList<PhraseEntity> _data;
-        public MemoryRepository()
+        private int _newId;
+        private IList<PhraseEntity> _data;
+
+        public MemoryRepository() : this(1) { }
+        
+        public MemoryRepository(int newIdSeed)
         {
-            _Id = 1;
+            _newId = newIdSeed;
             if(_data == null) _data = new List<PhraseEntity>();
         }
 
-        public static void Initialize()
+        public bool Initialize()
         {
-            MemoryRepository._Id = 1;
-            MemoryRepository._data = new List<PhraseEntity>();
+            _newId = 1;
+            _data = new List<PhraseEntity>();
+
+            return true;
         }
 
         public IList<PhraseEntity> GetAll()
@@ -44,7 +49,7 @@ namespace MinakoNoTangoLib.Library
         {
             PhraseEntity entry = new PhraseEntity()
             {
-                Id = MemoryRepository._Id++,
+                Id = _newId++,
                 AuthorName = authorName,
                 Language = language,
                 Comment = comment,
@@ -85,5 +90,8 @@ namespace MinakoNoTangoLib.Library
 
             return removed && added;
         }
+
+
+       
     }
 }

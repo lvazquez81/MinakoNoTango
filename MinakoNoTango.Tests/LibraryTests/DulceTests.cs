@@ -145,7 +145,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string originalComment = "Como se usa el toko";
             
             // Repository contains an expression
-            var memRepository = new MemoryRepository();
+            var memRepository = new MemoryRepository(1);
             int id = memRepository.Add(author, sampleExpression, LanguageType.English, originalComment);
 
             TeacherModel teacher = new TeacherModel(memRepository, _testSecurityToken);
@@ -173,7 +173,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string originalComment = "Como se usa el toko";
 
             // Repository contains an expression
-            var memRepository = new MemoryRepository();
+            var memRepository = new MemoryRepository(1);
             int id = memRepository.Add(author, sampleExpression, LanguageType.English, originalComment);
 
             TeacherModel teacher = new TeacherModel(memRepository, _testSecurityToken);

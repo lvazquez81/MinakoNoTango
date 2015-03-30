@@ -1,27 +1,40 @@
-﻿@model List<MinakoNoTangoLib.Entities.PhraseEntity>
+﻿@model MinakoNoTangoLib.Library.Models.TeacherModel
 @{
     ViewBag.Title = "Home";
 }
+<h1>Lista de frases</h1>
 
 <div>
-    <p>Lista de frases</p>
-    <table>
-        @{
-            foreach (var phrase in this.Model)
-            {
-            <tr>
-                <td>Frase: @phrase.Expression</td>
-                <td>Idioma: @phrase.Language.ToString()</td>
-                <td>Autor: @phrase.AuthorName</td>
-                <td>@Html.ActionLink(linkText: "View", actionName: "ViewPhrase",
-                    controllerName: "Home", routeValues: new { idPhrase = @phrase.Id }, htmlAttributes: null);</td>
-            </tr>
-            }
-        }
-    </table>
+    @Html.ActionLink(linkText: "Agregar frase", actionName: "AddPhrase")
 </div>
 
-<div>
-    @Html.ActionLink(linkText: "Agregar frase", actionName: "AddPhrase");
-</div>
+@{
+    foreach (var phrase in this.Model.Expressions)
+    {
+    <article>
+        <!-- Post phrase -->
+        <header>
+
+            <h3>@phrase.Expression</h3>
+            @Html.ActionLink(linkText: "Ver frase", actionName: "ViewDetail", routeValues: new { Id= @phrase.Id })
+        </header>
+
+        <!-- Original post -->
+        <section class="post_container">
+            <div class="post_profile">
+                <img src="img\dulce.jpg" style="width: 30px; height: 30px;" />
+                <span>@phrase.AuthorName</span>
+                <span>2015/Mar/23 07:00 pm</span>
+            </div>
+            <div class="post_comment">
+                <p>@phrase.Comment</p>
+            </div>
+
+        </section>
+
+    </article>
+    }
+}
+
+
 

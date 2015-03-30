@@ -1,0 +1,23 @@
+﻿@model MinakoNoTangoLib.Entities.PhraseEntity
+
+<fieldset>
+    <legend>Detalle</legend>
+
+    <!-- Expression -->
+    <div class="display-label">
+        @Html.DisplayFor(model => model.Expression)
+    </div>
+
+    <!-- Language -->
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Language)
+    </div>
+
+    <!-- Author -->
+    <div class="display-label">
+        @Html.DisplayFor(model => model.AuthorName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

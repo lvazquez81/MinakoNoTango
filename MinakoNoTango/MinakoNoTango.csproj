@@ -217,6 +217,7 @@
     <Content Include="Views\Home\AddPhrase.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\ViewDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,6 @@
 ﻿using MinakoNoTangoLib.Entities;
 using MinakoNoTangoLib.Library;
+using MinakoNoTangoLib.Library.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace MinakoNoTango.Controllers
 {
     public class HomeController : Controller
     {
-        private IMinakoNoTangoLibrary _lib;
+        private TeacherModel _teacher;
         private SecurityToken _token;
 
         public HomeController()
@@ -24,43 +25,30 @@ namespace MinakoNoTango.Controllers
             };
 
             var repository = new MemoryRepository();
-            _lib = new MinakoNoTangoLibrary(repository);
+            repository.Add(_token.Username, "hitori bochi yoru", LanguageType.English, "Probado el sistema.");
+            repository.Add(_token.Username, "I am hungry", LanguageType.English, "Probado el sistema.");
+
+
+            _teacher = new TeacherModel(repository, _token);
         }
 
+        /// <summary>
+        /// Home
+        /// </summary>
+        [HttpGet]
         public ActionResult Index()
         {
-            IList data = _lib.GetAllPhrases(_token).ToList();
-            return View(data);
+            return View(_teacher);
         }
 
+        /// <summary>
+        /// Home
+        /// </summary>
         [HttpGet]
-        public ActionResult AddPhrase()
+        public ActionResult ViewDetail(int Id)
         {
-            return View(new PhraseEntity());
+            _teacher.LoadViewedExpression(Id);
+            return View(viewName: "ViewDetail", model: _teacher.ViewedExpression);
         }
-
-        [HttpPost]
-        public ActionResult Save(PhraseEntity viewPhrase)
-        {
-            PhraseEntity phrase = _lib.AddEnglishPhrase(_token, viewPhrase.Expression);
-            if (phrase != null)
-            {
-                IList data = _lib.GetAllPhrases(_token).ToList();
-                return View("Index", data);
-            }
-            else
-            {
-                return View(phrase);
-            }
-            
-        }
-
-        [HttpGet]
-        public ActionResult ViewPhrase(int idPhrase = -1)
-        {
-            PhraseEntity phrase = _lib.GetPhraseDetail(_token, idPhrase);
-            return View("Detail", phrase);
-        }
-
     }
 }

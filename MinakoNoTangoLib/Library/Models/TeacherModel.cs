@@ -12,6 +12,7 @@ namespace MinakoNoTangoLib.Library.Models
         private readonly SecurityToken _token;
         private readonly IDataAccess _repository;
 
+        public IList<PhraseEntity> Expressions { get; set; }
         public PhraseEntity ViewedExpression { get; set; }
         public string Comment { get; set; }
         public string Correction { get; set; }
@@ -35,6 +36,8 @@ namespace MinakoNoTangoLib.Library.Models
             {
                 throw new ArgumentException();
             }
+
+            this.Expressions = _repository.GetAll();
         }
 
         public PhraseEntity GetExpression(int phraseId)
@@ -67,6 +70,18 @@ namespace MinakoNoTangoLib.Library.Models
             });
 
             return _repository.Update(originalPhrase);
+        }
+
+        public void LoadViewedExpression(int Id)
+        {
+            if (Id > 0)
+            {
+                this.ViewedExpression = _repository.GetSingle(Id);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

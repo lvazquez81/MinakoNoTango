@@ -5,9 +5,9 @@
 
     <!-- Expression -->
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Expression)
+        @Html.DisplayFor(model => model.Expression)
     </div>
-    
+
     <!-- Language -->
     <div class="display-field">
         @Html.DisplayFor(model => model.Language)
@@ -15,10 +15,9 @@
 
     <!-- Author -->
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.AuthorName)
+        @Html.DisplayFor(model => model.AuthorName)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </p>

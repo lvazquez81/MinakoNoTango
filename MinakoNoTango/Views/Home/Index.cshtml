@@ -5,7 +5,7 @@
 <h1>Lista de frases</h1>
 
 <div>
-    @Html.ActionLink(linkText: "Agregar frase", actionName: "AddPhrase")
+    @Html.ActionLink(linkText: "Agregar frase", actionName: "Add")
 </div>
 
 @{
@@ -16,7 +16,7 @@
         <header>
 
             <h3>@phrase.Expression</h3>
-            @Html.ActionLink(linkText: "Ver frase", actionName: "ViewDetail", routeValues: new { Id= @phrase.Id })
+            @Html.ActionLink(linkText: "Ver frase", actionName: "View", routeValues: new { Id= @phrase.Id })
         </header>
 
         <!-- Original post -->

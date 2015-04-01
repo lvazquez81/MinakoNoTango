@@ -14,6 +14,7 @@ namespace MinakoNoTango.Controllers
     {
         private TeacherModel _teacher;
         private SecurityToken _token;
+        private IDataAccess _repository;
 
         public HomeController()
         {
@@ -24,14 +25,17 @@ namespace MinakoNoTango.Controllers
                 Token = "abc123"
             };
 
-            var repository = new MemoryRepository();
-            repository.Add(_token.Username, "hitori bochi yoru", LanguageType.English, "Probado el sistema.");
-            repository.Add(_token.Username, "I am hungry", LanguageType.English, "Probado el sistema.");
+            _repository = new MemoryRepository();
+            if (_repository.GetAll().Count == 0)
+            {
+                _repository.Add(_token.Username, "hitori bochi yoru", LanguageType.English, "Probado el sistema.");
+                _repository.Add(_token.Username, "I am hungry", LanguageType.English, "Probado el sistema.");
+            }
 
-
-            _teacher = new TeacherModel(repository, _token);
+            _teacher = new TeacherModel(_repository, _token);
         }
 
+        #region Index
         /// <summary>
         /// Home
         /// </summary>
@@ -40,15 +44,41 @@ namespace MinakoNoTango.Controllers
         {
             return View(_teacher);
         }
+        #endregion
 
+        #region View
         /// <summary>
         /// Home
         /// </summary>
         [HttpGet]
-        public ActionResult ViewDetail(int Id)
+        public ActionResult View(int Id)
         {
             _teacher.LoadViewedExpression(Id);
-            return View(viewName: "ViewDetail", model: _teacher.ViewedExpression);
+            return View(viewName: "Detail", model: _teacher.ViewedExpression);
         }
+        #endregion
+
+        #region Add
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View("Add", new PhraseEntity());
+        }
+
+        [HttpPost]
+        public ActionResult Add(PhraseEntity phrase)
+        {
+            StudentModel student = new StudentModel(_repository, _token);
+
+            if (student.SaveExpression(phrase))
+            {
+                return View("Index", new TeacherModel(_repository, _token));
+            }
+            else
+            {
+                return View("Add", student);
+            }
+        }
+        #endregion
     }
 }

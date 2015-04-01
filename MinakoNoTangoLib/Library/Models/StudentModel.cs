@@ -14,9 +14,13 @@ namespace MinakoNoTangoLib.Library.Models
         public string Comment { get; set; }
         public DateTime CapturedOn { get; set; }
         public LanguageType Language { get; set; }
+
+        public PhraseEntity NewExpession { get; set; }
         
         private readonly SecurityToken _token;
         private readonly IDataAccess _repository;
+
+        public StudentModel() { }
 
         public StudentModel(IDataAccess dataAccess, SecurityToken token)
         {
@@ -67,6 +71,11 @@ namespace MinakoNoTangoLib.Library.Models
         public PhraseEntity GetExpression(int phraseId)
         {
             return _repository.GetSingle(phraseId);
+        }
+
+        public bool SaveExpression(PhraseEntity phrase)
+        {
+            throw new NotImplementedException();
         }
     }
 }

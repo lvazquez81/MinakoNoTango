@@ -1,9 +1,6 @@
 ﻿using MinakoNoTangoLib.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MinakoNoTangoLib.Library.Models
 {
@@ -19,8 +16,6 @@ namespace MinakoNoTangoLib.Library.Models
         
         private readonly SecurityToken _token;
         private readonly IDataAccess _repository;
-
-        public StudentModel() { }
 
         public StudentModel(IDataAccess dataAccess, SecurityToken token)
         {
@@ -75,7 +70,7 @@ namespace MinakoNoTangoLib.Library.Models
 
         public bool SaveExpression(PhraseEntity phrase)
         {
-            throw new NotImplementedException();
+            return _repository.Add(phrase.AuthorName, phrase.Expression, phrase.Language, phrase.Comment) > 0;
         }
     }
 }

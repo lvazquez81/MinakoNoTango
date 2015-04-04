@@ -14,7 +14,7 @@ namespace MinakoNoTango.Controllers
     {
         private TeacherModel _teacher;
         private SecurityToken _token;
-        private IDataAccess _repository;
+        private IRepository _repository;
 
         public HomeController()
         {

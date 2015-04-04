@@ -21,9 +21,9 @@ namespace MinakoNoTangoLib.Library
 
     public class MinakoNoTangoLibrary : IMinakoNoTangoLibrary
     {
-        private readonly IDataAccess _repository;
+        private readonly IRepository _repository;
 
-        public MinakoNoTangoLibrary(IDataAccess dataAccess)
+        public MinakoNoTangoLibrary(IRepository dataAccess)
         {
             if (dataAccess != null)
             {

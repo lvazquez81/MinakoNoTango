@@ -10,14 +10,14 @@ namespace MinakoNoTangoLib.Library.Models
     public class TeacherModel
     {
         private readonly SecurityToken _token;
-        private readonly IDataAccess _repository;
+        private readonly IRepository _repository;
 
         public IList<PhraseEntity> Expressions { get; set; }
         public PhraseEntity ViewedExpression { get; set; }
         public string Comment { get; set; }
         public string Correction { get; set; }
 
-        public TeacherModel(IDataAccess dataAccess, SecurityToken token)
+        public TeacherModel(IRepository dataAccess, SecurityToken token)
         {
             if (token != null)
             {

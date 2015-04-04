@@ -19,7 +19,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string englishPhrase = Faker.TextFaker.Sentence();
             string comment = Faker.TextFaker.Sentences(3);
 
-            IDataAccess repo = new MemoryRepository();
+            IRepository repo = new MemoryRepository();
             int phraseId = repo.Add(authorName, englishPhrase, LanguageType.English, comment);
 
             PhraseEntity phrase = new PhraseEntity()
@@ -41,7 +41,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string expression = Faker.TextFaker.Sentence();
             LanguageType language = LanguageType.English;
             
-            IDataAccess repo = new MemoryRepository();
+            IRepository repo = new MemoryRepository();
             //PhraseEntity phrase = repo.Add(authorName, englishPhrase);
             int phraseId = repo.Add(authorName, expression, language);
 
@@ -61,7 +61,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string comment = Faker.TextFaker.Sentences(3);
             LanguageType language = LanguageType.English;
 
-            IDataAccess repo = new MemoryRepository();
+            IRepository repo = new MemoryRepository();
             //PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
             int phraseId = repo.Add(authorName, expression, language, comment);
 
@@ -82,7 +82,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string comment = Faker.TextFaker.Sentences(3);
             LanguageType language = LanguageType.English;
 
-            IDataAccess repo = new MemoryRepository();
+            IRepository repo = new MemoryRepository();
             //PhraseEntity phrase = repo.Add(authorName, englishPhrase, comment);
             int phraseId = repo.Add(authorName, expression, language, comment);
             Assert.IsTrue(phraseId > 0);
@@ -98,7 +98,7 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestMethod]
         public void MemRepository_ModifyPhrase()
         {
-            IDataAccess repo = new MemoryRepository();
+            IRepository repo = new MemoryRepository();
             string authorName = Faker.NameFaker.Name();
             string englishPhrase = Faker.TextFaker.Sentence();
             string comment = Faker.TextFaker.Sentences(3);

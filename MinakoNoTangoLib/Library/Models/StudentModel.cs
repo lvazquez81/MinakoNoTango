@@ -14,10 +14,10 @@ namespace MinakoNoTangoLib.Library.Models
 
         public PhraseEntity NewExpession { get; set; }
         
-        private readonly SecurityToken _token;
-        private readonly IDataAccess _repository;
+        private SecurityToken _token;
+        private IRepository _repository;
 
-        public StudentModel(IDataAccess dataAccess, SecurityToken token)
+        public StudentModel(IRepository dataAccess, SecurityToken token)
         {
             if (token != null)
             {

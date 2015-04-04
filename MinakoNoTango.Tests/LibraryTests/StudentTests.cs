@@ -17,7 +17,7 @@ namespace MinakoNoTango.Tests.LibraryTests
         [TestInitialize]
         public void TestSetup()
         {
-            IDataAccess testRepository = initiateFakeDatabase();
+            IRepository testRepository = initiateFakeDatabase();
             _lib = new MinakoNoTangoLibrary(testRepository);
             _testSecurityToken = getTestSecurityToken();
         }
@@ -36,9 +36,9 @@ namespace MinakoNoTango.Tests.LibraryTests
             };
         }
 
-        private IDataAccess initiateFakeDatabase()
+        private IRepository initiateFakeDatabase()
         {
-            var mockDataAccess = new Mock<IDataAccess>();
+            var mockDataAccess = new Mock<IRepository>();
 
             // Mock GetAll
             mockDataAccess.Setup(x => x.GetAll()).Returns(new List<PhraseEntity>()

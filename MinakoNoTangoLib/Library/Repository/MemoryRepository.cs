@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MinakoNoTangoLib.Library
 {
-    public class MemoryRepository : IDataAccess
+    public class MemoryRepository : IRepository
     {
         private int _newId;
         private IList<PhraseEntity> _data;

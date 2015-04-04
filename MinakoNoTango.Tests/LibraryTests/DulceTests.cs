@@ -16,7 +16,7 @@ namespace MinakoNoTango.Tests.LibraryTests
     {
         private StudentModel _lib;
         private SecurityToken _testSecurityToken;
-        private IDataAccess _repository;
+        private IRepository _repository;
 
         #region Test setup
         [TestInitialize]
@@ -40,9 +40,9 @@ namespace MinakoNoTango.Tests.LibraryTests
             };
         }
 
-        private IDataAccess initiateFakeDatabase()
+        private IRepository initiateFakeDatabase()
         {
-            var mockDataAccess = new Mock<IDataAccess>();
+            var mockDataAccess = new Mock<IRepository>();
 
             // Mock GetAll
             mockDataAccess.Setup(x => x.GetAll()).Returns(new List<PhraseEntity>()
@@ -122,7 +122,7 @@ namespace MinakoNoTango.Tests.LibraryTests
             string author = "Luis";
             
             // Repository contains an expression
-            var repository = new Mock<IDataAccess>();
+            var repository = new Mock<IRepository>();
             repository.Setup(x => x.GetSingle(It.IsAny<int>())).Returns(new PhraseEntity()
             {
                 Id = Faker.NumberFaker.Number(),

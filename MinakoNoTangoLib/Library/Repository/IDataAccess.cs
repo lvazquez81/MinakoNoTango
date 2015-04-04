@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MinakoNoTangoLib.Library
 {
-    public interface IDataAccess
+    public interface IRepository
     {
         IList<PhraseEntity> GetAll();
         PhraseEntity GetSingle(int phraseId);

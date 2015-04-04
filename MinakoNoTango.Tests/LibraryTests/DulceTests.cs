@@ -98,12 +98,10 @@ namespace MinakoNoTango.Tests.LibraryTests
             student.Author = _testSecurityToken.Username;
             student.Language = LanguageType.Japanese;
 
-            PhraseEntity phrase = student.SaveExpression();
+            bool result = student.SaveExpression();
 
-            Assert.IsNotNull(phrase);
-            Assert.AreEqual(student.Expression, phrase.Expression);
-            Assert.AreEqual(student.Author, phrase.AuthorName);
-            Assert.AreEqual(student.Language, phrase.Language);
+            Assert.IsTrue(result);
+            Assert.IsTrue(student.NewId > 0);
         }
 
         [TestMethod]

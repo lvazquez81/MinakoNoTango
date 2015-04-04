@@ -1,4 +1,4 @@
-﻿@model MinakoNoTangoLib.Entities.PhraseEntity
+﻿@model MinakoNoTangoLib.Library.Models.StudentModel
 
     @{
         Layout = null;
@@ -12,20 +12,22 @@
         <fieldset>
             <legend>Agregar</legend>
 
+            <!-- Expression -->
             <div class="editor-label">
-                @Html.LabelFor(model => model.Expression)
+                @Html.LabelFor(x => x.Expression)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.Expression)
-                @Html.ValidationMessageFor(model => model.Expression)
+                @Html.EditorFor(x => x.Expression)
+                @Html.ValidationMessageFor(x => x.Expression)
             </div>
 
+            <!-- Comment -->
             <div class="editor-label">
-                @Html.LabelFor(model => model.Comment)
+                @Html.LabelFor(x => x.Comment)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.Comment)
-                @Html.ValidationMessageFor(model => model.Comment)
+                @Html.EditorFor(x => x.Comment)
+                @Html.ValidationMessageFor(x => x.Comment)
             </div>
 
             <p>

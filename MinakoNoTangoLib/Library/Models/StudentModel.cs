@@ -6,18 +6,29 @@ namespace MinakoNoTangoLib.Library.Models
 {
     public class StudentModel
     {
+        public int NewId { get; set; }
         public string Author { get; set; }
         public string Expression { get; set; }
         public string Comment { get; set; }
         public DateTime CapturedOn { get; set; }
         public LanguageType Language { get; set; }
 
-        public PhraseEntity NewExpession { get; set; }
-        
         private SecurityToken _token;
         private IRepository _repository;
 
+        public StudentModel() { }
+        
         public StudentModel(IRepository dataAccess, SecurityToken token)
+        {
+            validateRepositoryAndSecurityToken(dataAccess, token);
+        }
+
+        public void Setup(IRepository dataAccess, SecurityToken token)
+        {
+            validateRepositoryAndSecurityToken(dataAccess, token);
+        }
+
+        private void validateRepositoryAndSecurityToken(IRepository dataAccess, SecurityToken token)
         {
             if (token != null)
             {
@@ -38,24 +49,10 @@ namespace MinakoNoTangoLib.Library.Models
             }
         }
 
-        public PhraseEntity SaveExpression()
+        public bool SaveExpression()
         {
-            PhraseEntity phrase = null;
-            int phraseId = _repository.Add(_token.Username, this.Expression, this.Language, this.Comment);
-
-            if (phraseId > 0)
-            {
-                phrase = new PhraseEntity()
-                {
-                    Id = phraseId,
-                    AuthorName = _token.Username,
-                    Expression = this.Expression,
-                    Language = this.Language,
-                    Comment = this.Comment
-                };
-            }
-
-            return phrase;
+            this.NewId = _repository.Add(_token.Username, this.Expression, this.Language, this.Comment);
+            return this.NewId > 0;
         }
 
         public IList<PhraseEntity> GetAllPhrases()
@@ -68,9 +65,6 @@ namespace MinakoNoTangoLib.Library.Models
             return _repository.GetSingle(phraseId);
         }
 
-        public bool SaveExpression(PhraseEntity phrase)
-        {
-            return _repository.Add(phrase.AuthorName, phrase.Expression, phrase.Language, phrase.Comment) > 0;
-        }
+      
     }
 }

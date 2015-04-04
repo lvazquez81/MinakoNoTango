@@ -62,15 +62,14 @@ namespace MinakoNoTango.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            return View("Add", new PhraseEntity());
+            return View("Add", new StudentModel(_repository, _token));
         }
 
         [HttpPost]
-        public ActionResult Add(PhraseEntity phrase)
+        public ActionResult Add(StudentModel student)
         {
-            StudentModel student = new StudentModel(_repository, _token);
-
-            if (student.SaveExpression(phrase))
+            student.Setup(_repository, _token);
+            if (student.SaveExpression())
             {
                 return View("Index", new TeacherModel(_repository, _token));
             }

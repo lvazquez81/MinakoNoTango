@@ -1,21 +1,21 @@
-﻿@model MinakoNoTangoLib.Entities.PhraseEntity
+﻿@model MinakoNoTangoLib.Library.Models.TeacherModel
 
 <fieldset>
     <legend>Detalle</legend>
 
     <!-- Expression -->
     <div class="display-label">
-        @Html.DisplayFor(model => model.Expression)
+        @Html.DisplayFor(x => x.ViewedExpression.Expression)
     </div>
 
     <!-- Language -->
     <div class="display-field">
-        @Html.DisplayFor(model => model.Language)
+        @Html.DisplayFor(x => x.ViewedExpression.Language)
     </div>
 
     <!-- Author -->
     <div class="display-label">
-        @Html.DisplayFor(model => model.AuthorName)
+        @Html.DisplayFor(x => x.ViewedExpression.AuthorName)
     </div>
 </fieldset>
 <p>

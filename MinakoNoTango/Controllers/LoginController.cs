@@ -1,4 +1,5 @@
-﻿using MinakoNoTangoLib.Library.Models;
+﻿using MinakoNoTango.Models;
+using MinakoNoTangoLib.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,20 @@ namespace MinakoNoTango.Controllers
         }
 
         [HttpGet]
-        public ActionResult IndexGet()
+        public ActionResult Index()
+        {
+            return View(new LoginView());
+        }
+
+        [HttpPost]
+        public ActionResult Index(LoginView form)
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult IndexPost()
+        public ActionResult Logout()
         {
-            return View();
+            return View("Index", new LoginView());
         }
 
 

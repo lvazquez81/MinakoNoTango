@@ -1,0 +1,27 @@
+﻿@model MinakoNoTango.Models.PhraseView
+
+@{
+    ViewBag.Title = "Mis frases";
+}
+
+<article>
+    <header>
+
+        <h3>@ViewBag.Title</h3>
+        @Html.ActionLink(linkText: "Agregar", actionName: "Add")
+
+    </header>
+
+    <ul>
+        @{
+            foreach (var entry in this.Model.Phrases)
+            {
+            <li>@entry</li>
+            }
+        }
+    </ul>
+</article>
+
+
+
+

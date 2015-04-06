@@ -124,9 +124,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PhraseController.cs" />
+    <Compile Include="Controllers\TangoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginView.cs" />
+    <Compile Include="Models\PhraseView.cs" />
+    <Compile Include="Models\TangoView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -217,11 +222,14 @@
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Home\Add.cshtml" />
+    <Content Include="Views\Tango\Index.cshtml" />
+    <Content Include="Views\Tango\Add.cshtml" />
+    <Content Include="Views\Phrase\Index.cshtml" />
+    <Content Include="Views\Phrase\Add.cshtml" />
+    <Content Include="Views\Phrase\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,28 +1,28 @@
-﻿@model MinakoNoTangoLib.Library.Models.TeacherModel
+﻿@model MinakoNoTango.Models.PhraseView
 
 @{
     ViewBag.Title = "Detalle";
 }
-
 
 <fieldset>
     <legend>Detalle</legend>
 
     <!-- Expression -->
     <div class="display-label">
-        @Html.DisplayFor(x => x.ViewedExpression.Expression)
+        @Html.DisplayFor(x => x.Expression)
     </div>
 
     <!-- Language -->
     <div class="display-field">
-        @Html.DisplayFor(x => x.ViewedExpression.Language)
+        @Html.DisplayFor(x => x.Language)
     </div>
 
     <!-- Author -->
     <div class="display-label">
-        @Html.DisplayFor(x => x.ViewedExpression.AuthorName)
+        @Html.DisplayFor(x => x.Author)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar", "Index")
 </p>
+

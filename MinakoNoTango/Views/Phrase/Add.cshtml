@@ -1,4 +1,4 @@
-﻿@model MinakoNoTangoLib.Library.Models.StudentModel
+﻿@model MinakoNoTango.Models.PhraseView
 
 @{
     ViewBag.Title = "Agregar";
@@ -14,11 +14,11 @@
 
         <!-- Expression -->
         <div class="editor-label">
-            @Html.LabelFor(x => x.Expression)
+            @Html.LabelFor(x => x.NewPhrase)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(x => x.Expression)
-            @Html.ValidationMessageFor(x => x.Expression)
+            @Html.EditorFor(x => x.NewPhrase)
+            @Html.ValidationMessageFor(x => x.NewPhrase)
         </div>
 
         <!-- Comment -->
@@ -37,5 +37,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar", "Index")
 </div>

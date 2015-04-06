@@ -48,11 +48,12 @@
     <Compile Include="Library\Models\LoginModel.cs" />
     <Compile Include="Library\Models\StudentModel.cs" />
     <Compile Include="Library\Models\TeacherModel.cs" />
-    <Compile Include="Library\Repository\IDataAccess.cs" />
+    <Compile Include="Library\Repository\IRepository.cs" />
     <Compile Include="Library\IMinakoNoTangoAuthentication.cs" />
     <Compile Include="Library\Repository\MemoryRepository.cs" />
     <Compile Include="Library\MinakoNoTangoAuthentication.cs" />
     <Compile Include="Library\MinakoNoTangoLib.cs" />
+    <Compile Include="Library\Repository\XmlRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

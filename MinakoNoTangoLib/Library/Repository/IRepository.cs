@@ -9,6 +9,8 @@ namespace MinakoNoTangoLib.Library
 {
     public interface IRepository
     {
+        bool Initialize();
+        
         IList<PhraseEntity> GetAll();
         PhraseEntity GetSingle(int phraseId);
 
@@ -20,6 +22,6 @@ namespace MinakoNoTangoLib.Library
         bool Remove(int phraseId);
         bool Update(PhraseEntity phrase);
 
-        bool Initialize();
+        
     }
 }

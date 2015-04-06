@@ -1,41 +1,37 @@
 ﻿@model MinakoNoTangoLib.Library.Models.StudentModel
 
-    @{
-        Layout = null;
-    }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Agregar</legend>
 
-        <fieldset>
-            <legend>Agregar</legend>
+        <!-- Expression -->
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Expression)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.Expression)
+            @Html.ValidationMessageFor(x => x.Expression)
+        </div>
 
-            <!-- Expression -->
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Expression)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Expression)
-                @Html.ValidationMessageFor(x => x.Expression)
-            </div>
+        <!-- Comment -->
+        <div class="editor-label">
+            @Html.LabelFor(x => x.Comment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(x => x.Comment)
+            @Html.ValidationMessageFor(x => x.Comment)
+        </div>
 
-            <!-- Comment -->
-            <div class="editor-label">
-                @Html.LabelFor(x => x.Comment)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(x => x.Comment)
-                @Html.ValidationMessageFor(x => x.Comment)
-            </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
 
-            <p>
-                <input type="submit" value="Create" />
-            </p>
-        </fieldset>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
